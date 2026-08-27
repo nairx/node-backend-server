@@ -4,10 +4,10 @@ const app = express()
 
 app.use(express.json())
 
-const products = [
-    { id: 1, name: "Product 1", price: 100 },
-    { id: 2, name: "Product 2", price: 120 },
-    { id: 3, name: "Product 3", price: 140 }
+let products = [
+    { id: 1, name: "Product 1", price: 100, category: "electronics" },
+    { id: 2, name: "Product 2", price: 120, category: "electronics" },
+    { id: 3, name: "Product 3", price: 140, category: "clothes" }
 ]
 
 app.listen(8081, () => {
@@ -19,23 +19,33 @@ app.get("/api/products", (req, res) => {
 })
 
 app.get("/api/products/:id", (req, res) => {
-    const id = req.params.id
-    res.json({ message: "Product " + id })
+    const id = Number(req.params.id)
+    const product = products.find(product => product.id === id)
+    res.json(product)
+})
+
+app.get("/api/products/category/:category", (req, res) => {
+    const category = req.params.category
+    const filteredProducts = products.filter(product => product.category === category)
+    res.json(filteredProducts)
 })
 
 app.post("/api/products", (req, res) => {
     const body = req.body
-    console.log(body)
-    res.json({ message: "Product Created" })
+    products = [...products, body]
+    res.json(products)
 })
 
-app.patch("/api/products/:id", (req, res) => {
+
+app.put("/api/products/:id", (req, res) => {
     const body = req.body
-    const id = req.params.id
-    res.json({ message: "Product " + id + " updated successfully" })
+    const id = Number(req.params.id)
+    products = products.map(product => product.id === id ? body : product)
+    res.json(products)
 })
 
 app.delete("/api/products/:id", (req, res) => {
-    const id = req.params.id
-    res.json({ message: "Product " + id + " deleted successfully" })
+    const id = Number(req.params.id)
+    products = products.filter(product => product.id !== id)
+    res.json(products)
 })

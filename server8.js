@@ -4,12 +4,18 @@ const app = express()
 
 app.use(express.json())
 
+const products = [
+    { id: 1, name: "Product 1", price: 100 },
+    { id: 2, name: "Product 2", price: 120 },
+    { id: 3, name: "Product 3", price: 140 }
+]
+
 app.listen(8081, () => {
     console.log("Server started")
 })
 
 app.get("/api/products", (req, res) => {
-    res.json({message:"Product List"})
+    res.json(products)
 })
 
 app.get("/api/products/:id", (req, res) => {

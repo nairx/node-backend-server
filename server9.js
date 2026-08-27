@@ -25,14 +25,14 @@ app.post("/login", (req, res) => {
             })
         }
         else {
-            res.status(400).json({
+            res.status(401).json({
                 success: false,
                 message: "Invalid Password"
             })
         }
     }
     else {
-        res.status(400).json({
+        res.status(401).json({
             success: false,
             message: "User not found"
         })
@@ -74,3 +74,11 @@ app.delete("/users/:id", (req, res) => {
         message: "User deleted successfully"
     })
 })
+
+
+//200 for Ok
+//201 Created
+//400 Bad Request
+//401 Unauthorized
+//404 Not found
+//500 Internal Server Error

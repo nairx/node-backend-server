@@ -14,3 +14,45 @@ app.listen(8081, () => {
     console.log("Server started")
 })
 
+app.post("/login", (req, res) => {
+    const { email, password } = req.body
+    const existingUser = users.find(user => user.email === email)
+    if (existingUser) {
+        if (existingUser.password === password) {
+            res.status(200).json({
+                success: true,
+                message: "Welcome"
+            })
+        }
+        else {
+            res.status(400).json({
+                success: false,
+                message: "Invalid Password"
+            })
+        }
+    }
+    else {
+        res.status(400).json({
+            success: false,
+            message: "User not found"
+        })
+    }
+})
+
+app.post("/register", (req, res) => {
+    const body = req.body
+    users = [...users, body]
+    res.status(201).json({
+        success: true,
+        message: "User registered successfully"
+    })
+})
+
+app.get("/users",(req,res)=>{
+    res.status(200).json({
+        success:true,
+        users
+    })
+})
+
+

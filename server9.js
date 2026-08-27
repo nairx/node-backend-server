@@ -48,11 +48,29 @@ app.post("/register", (req, res) => {
     })
 })
 
-app.get("/users",(req,res)=>{
+app.get("/users", (req, res) => {
     res.status(200).json({
-        success:true,
+        success: true,
         users
     })
 })
 
+app.put("/users/:id", (req, res) => {
+    const body = req.body
+    const id = Number(req.params.id)
+    users = users.map(user => user.id === id ? body : user)
+    res.status(200).json({
+        success: true,
+        message: "User updated successfully"
+    })
+})
 
+
+app.delete("/users/:id", (req, res) => {
+    const id = Number(req.params.id)
+    users = users.filter(user => user.id !== id)
+    res.status(200).json({
+        success: true,
+        message: "User deleted successfully"
+    })
+})

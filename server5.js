@@ -33,3 +33,12 @@ app.get("/products/category/:category/price/:price", (req, res) => {
     const price = req.params.price
     res.json({ category, price })
 })
+
+
+app.get("/products/search/term", (req, res) => {
+    const category = req.query.category
+    const price = req.query.price
+    res.json({ category, price })
+})
+
+

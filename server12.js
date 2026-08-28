@@ -20,7 +20,6 @@ const authenticate = (req, res, next) => {
 
 }
 
-
 app.get("/home", (req, res) => {
     res.json("Home Page")
 })
